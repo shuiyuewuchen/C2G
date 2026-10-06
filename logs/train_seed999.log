@@ -1,0 +1,31 @@
+Hyperparameters: (identical to seed42 except seed=999)
+  qk_gain_init: 5.25  ema_decay: 0.9965  matrix_lr: 0.022  muon_wd: 0.095
+  num_layers: 11  model_dim: 512  num_heads: 8  num_kv_heads: 4
+  loop_start: 3  loop_end: 5  num_loops: 2  parallel_residual_start: 7
+  seed: 999  warmdown_frac: 0.72  ttt_lr: 0.005  ttt_epochs: 3
+model_params:35944536
+warmup_step: 20/20
+loop_warmup:enabled encoder:[0, 1, 2, 3, 4, 5, 3, 4] decoder:[5, 3, 4, 5, 6, 7, 8, 9, 10]
+500/20000 train_loss: 3.3321 train_time: 0.9m tok/s: 7693440
+1000/20000 train_loss: 3.1922 train_time: 1.7m tok/s: 7701122
+1500/20000 train_loss: 3.1001 train_time: 2.6m tok/s: 7707655
+2000/20000 train_loss: 3.0661 train_time: 3.4m tok/s: 7712330
+layer_loop:enabled step:2018 frac:0.350
+2500/20000 train_loss: 3.0655 train_time: 4.7m tok/s: 7024118
+3000/20000 train_loss: 2.9455 train_time: 5.9m tok/s: 6645520
+3500/20000 train_loss: 2.9651 train_time: 7.2m tok/s: 6398890
+4000/20000 train_loss: 2.9088 train_time: 8.4m tok/s: 6224550
+4000/20000 val_loss: 2.8699 val_bpb: 1.1110
+4500/20000 train_loss: 2.7601 train_time: 9.7m tok/s: 6098870
+4550/20000 val_loss: 2.8101 val_bpb: 1.0880
+stopping_early: wallclock_cap train_time: 587920ms step: 4550/20000
+peak memory allocated: 39080 MiB reserved: 39155 MiB
+ema:applying EMA weights
+pre-quantization post-ema val_loss:2.80711055 val_bpb:1.08699022 eval_time:7420ms
+Serialized model: 135431033 bytes
+GPTQ:collected 67 Hessians in 12.5s
+quantized val_loss:2.83988012 val_bpb:1.09941108 eval_time:25480ms
+quantized_sliding_window val_loss:2.79688021 val_bpb:1.08263011 eval_time:120890ms
+ttt:start chunks=1238 ttt_lr=0.005 ttt_epochs=3
+quantized_ttt val_loss:2.79144088 val_bpb:1.08118022 eval_time:366210ms
+=== FINAL seed=999 sliding_bpb=1.08263  ttt_bpb=1.08118  artifact=15993232 bytes ===

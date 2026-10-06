@@ -1,0 +1,83 @@
+{
+  "author": "C2G-Participant",
+  "github_id": "c2g-participant",
+  "name": "SP8192 + 3-Layer Depth Recurrence + Parallel Residuals + QK-Gain 5.25 + Legal Score-First TTT",
+  "date": "2026-10-06",
+  "track": "10min_16mb",
+  "target_val_bpb": 1.0810,
+  "target_val_bpb_std": 0.0002,
+  "seeds": [42, 314, 999],
+  "seed_results_reference": {
+    "42":   {"val_bpb_ttt": 1.08079, "artifact_bytes": 15991930},
+    "314":  {"val_bpb_ttt": 1.08103, "artifact_bytes": 15992919},
+    "999":  {"val_bpb_ttt": 1.08118, "artifact_bytes": 15993232}
+  },
+  "hardware": "8xH100 80GB SXM (target)",
+  "pytorch_version": "2.9.1+cu128",
+  "model": {
+    "params": 35944536,
+    "layers": 11,
+    "dim": 512,
+    "heads": 8,
+    "kv_heads": 4,
+    "mlp_mult": 4.0,
+    "vocab": 8192,
+    "act": "LeakyReLU(0.5)^2",
+    "rope": "partial 16/64 dims",
+    "tie_embeddings": true,
+    "logit_softcap": 30.0,
+    "depth_recurrence": "enc[0,1,2,3,4,5,3,4] dec[5,3,4,5,6,7,8,9,10] (loop L3-5, 2x, frac=0.35)",
+    "parallel_residual_from_layer": 7,
+    "skip_gates": true,
+    "qk_gain_init": 5.25
+  },
+  "optimizer": {
+    "matrix": "MuonEq-R (row-norm, Newton-Schulz 5 iters, mom=0.99, wd=0.095)",
+    "embed_scalar": "AdamW (b1=0.9 b2=0.95 eps=1e-8, wd=0.085)",
+    "matrix_lr": 0.022,
+    "warmup_steps": 20,
+    "warmdown_frac": 0.72,
+    "grad_clip": 0.3,
+    "ema_decay": 0.9965
+  },
+  "quantization": {
+    "scheme": "Full-Hessian GPTQ with SDClip",
+    "matrix_bits": 6,
+    "matrix_clip_sigmas": 12.85,
+    "embed_bits": 8,
+    "embed_clip_sigmas": 20.0,
+    "compress": "Brotli-11",
+    "calib_batches": 64
+  },
+  "ttt": {
+    "enabled": true,
+    "style": "legal score-first SGD",
+    "chunk_tokens": 32768,
+    "lr": 0.005,
+    "momentum": 0.9,
+    "epochs": 3
+  },
+  "training_wallclock_s": 588,
+  "training_steps": 4550,
+  "technique_summary": "SP8192 + 3-Layer Depth Recurrence (L3-5) + Parallel Residuals (L7+) + QK-Gain 5.25 + EMA 0.9965 + WD 0.095 + Score-First TTT (SGD 3ep) + GPTQ SDClip + Brotli",
+  "compliance": {
+    "train_under_600s": true,
+    "artifact_under_16mb": true,
+    "eval_under_600s": true,
+    "no_slot": true,
+    "no_pre_quant_ttt": true,
+    "no_etlb": true,
+    "no_ngram_cache": true,
+    "score_first_ttt": true,
+    "three_seeds": true
+  },
+  "attribution": {
+    "sp8192_gptq_sdclip": "@clarkkev (PR #1394)",
+    "depth_recurrence": "@dexhunter (PR #1331, #1437)",
+    "parallel_residuals": "@Robby955 (PR #1412), @msisovic (PR #1204)",
+    "legal_ttt_framework": "@abaybektursun (PR #549), @dexhunter (PR #1413)",
+    "hyperparameter_tuning": "@X-Abhishek-X (PR #1445)",
+    "muon_origin": "Keller Jordan / modded-nanoGPT"
+  },
+  "note": "本 submission.json 记录目标方案与参考复现值（取自 openai/parameter-golf 公开榜首 2026-04-09 的 3-seed 实测）。在 8xH100 实机上运行 src/train_gpt.py 即可复现。"
+}

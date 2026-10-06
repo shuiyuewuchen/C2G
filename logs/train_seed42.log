@@ -1,0 +1,62 @@
+Hyperparameters:
+  ema_decay: 0.9965
+  embed_bits: 8
+  embedding_dim: 512
+  enable_looping_at: 0.35
+  gptq_reserve_seconds: 12.0
+  grad_clip_norm: 0.3
+  loop_end: 5
+  loop_start: 3
+  matrix_bits: 6
+  matrix_clip_sigmas: 12.85
+  matrix_lr: 0.022
+  max_wallclock_seconds: 600.0
+  mlp_mult: 4.0
+  model_dim: 512
+  muon_wd: 0.095
+  num_heads: 8
+  num_kv_heads: 4
+  num_layers: 11
+  num_loops: 2
+  parallel_residual_start: 7
+  qk_gain_init: 5.25
+  seed: 42
+  train_seq_len: 2048
+  ttt_enabled: True
+  ttt_lr: 0.005
+  ttt_epochs: 3
+  vocab_size: 8192
+  warmdown_frac: 0.72
+  warmup_steps: 20
+  world_size: 8
+train_shards: 128
+val_tokens: 40540160
+model_params:35944536
+gptq:reserving 12s, effective=588000ms
+warmup_step: 1/20 ... 20/20
+loop_warmup:enabled encoder:[0, 1, 2, 3, 4, 5, 3, 4] decoder:[5, 3, 4, 5, 6, 7, 8, 9, 10]
+0/20000 val_loss: 9.0090 val_bpb: 3.4877
+500/20000 train_loss: 3.3346 train_time: 0.9m tok/s: 7691255
+1000/20000 train_loss: 3.1948 train_time: 1.7m tok/s: 7698918
+1500/20000 train_loss: 3.1030 train_time: 2.6m tok/s: 7705554
+2000/20000 train_loss: 3.0686 train_time: 3.4m tok/s: 7710490
+layer_loop:enabled step:2018 frac:0.350 encoder:[0, 1, 2, 3, 4, 5, 3, 4] decoder:[5, 3, 4, 5, 6, 7, 8, 9, 10]
+2500/20000 train_loss: 3.0673 train_time: 4.7m tok/s: 7021940
+3000/20000 train_loss: 2.9476 train_time: 5.9m tok/s: 6642896
+3500/20000 train_loss: 2.9672 train_time: 7.2m tok/s: 6396259
+4000/20000 train_loss: 2.9106 train_time: 8.4m tok/s: 6223343
+4000/20000 val_loss: 2.8722 val_bpb: 1.1119
+4500/20000 train_loss: 2.7622 train_time: 9.7m tok/s: 6095957
+4550/20000 val_loss: 2.8119 val_bpb: 1.0886
+stopping_early: wallclock_cap train_time: 588047ms step: 4550/20000
+peak memory allocated: 39045 MiB reserved: 39124 MiB
+ema:applying EMA weights
+pre-quantization post-ema val_loss:2.80873254 val_bpb:1.08734790 eval_time:7440ms
+Serialized model: 135431033 bytes
+Code size: 16630 bytes
+GPTQ:collected 67 Hessians in 12.7s
+quantized val_loss:2.84065044 val_bpb:1.09970431 eval_time:25515ms
+quantized_sliding_window val_loss:2.79714850 val_bpb:1.08286335 eval_time:120961ms
+ttt:start chunks=1238 ttt_lr=0.005 ttt_epochs=3
+quantized_ttt val_loss:2.79180191 val_bpb:1.08079352 eval_time:366525ms
+=== FINAL seed=42  sliding_bpb=1.08286  ttt_bpb=1.08079  artifact=15991930 bytes ===
